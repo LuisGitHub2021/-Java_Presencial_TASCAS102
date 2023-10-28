@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws VendaBuidaException {
 
 		ArrayList<Producte> productosCarrito = new ArrayList<Producte>();
 		Venta carrito = Venta.crearCarrito(productosCarrito, 0);
@@ -21,12 +21,8 @@ public class App {
 			if (PideDatos.pideString("Pulsa 0 para finalizar la compra y calcular total carrito o INTRO para seguir")
 					.equals("0")) {
 
-				try {
-					Venta.calcularCarrito(carrito);
-				} catch (VendaBuidaException e) {
+				Venta.calcularCarrito(carrito);
 
-					System.out.println(e.getMessage());
-				}
 				estarComprando = false;
 
 			} else if (PideDatos.pideString("Pulsa 0 para vaciar el carrito o INTRO para seguir").equals("0")) {
@@ -34,15 +30,10 @@ public class App {
 				List<Producte> listaProductoSeleccionados = carrito.getProductosCarrito().stream()
 						.collect(Collectors.toList());
 				carrito.getProductosCarrito().removeAll(listaProductoSeleccionados);
-				try {
-					Venta.calcularCarrito(carrito);
-				} catch (VendaBuidaException e) {
-					System.out.println(e.getMessage());
 
-				}
+				Venta.calcularCarrito(carrito);
 
 			}
 		}
 	}
-
 }
