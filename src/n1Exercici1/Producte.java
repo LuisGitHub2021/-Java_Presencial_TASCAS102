@@ -1,4 +1,4 @@
-package n2Exercici1;
+package n1Exercici1;
 
 public class Producte {
 

@@ -1,4 +1,4 @@
-package n2Exercici3;
+package n2Exercici1;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -29,15 +29,15 @@ public class Entrada {
 		int num = 0;
 
 		try {
+
 			num = new Scanner(System.in).nextInt();
-			if (num < 0) {
-				num = -1 * num;
+			if (num<0) {
+				num=-1*num;
 			}
 
 		} catch (InputMismatchException e) {
 
 			System.out.println("El valor introducido no es un número entero");
-
 		}
 
 		return num;
@@ -78,7 +78,7 @@ public class Entrada {
 		}
 		return num;
 	}
-
+	
 	public static char llegirChar(String txt) throws Exception {
 
 		System.out.println(txt);
@@ -87,13 +87,13 @@ public class Entrada {
 		try {
 
 			String candidatoChar = new Scanner(System.in).next();
-
+			
 			if (candidatoChar.length() > 1) {
-				entradaChar = candidatoChar.charAt(-1);
-
+				entradaChar=candidatoChar.charAt(-1);
+				
 			} else {
-				entradaChar = candidatoChar.charAt(0);
-
+				entradaChar=candidatoChar.charAt(0);
+			
 			}
 		} catch (Exception e) {
 
@@ -104,11 +104,11 @@ public class Entrada {
 		return entradaChar;
 
 	}
-
+	
 	public static String llegirString(String txt) throws Exception {
 
 		System.out.println(txt);
-		String entradaString = "0";
+		String entradaString = null;
 
 		try {
 

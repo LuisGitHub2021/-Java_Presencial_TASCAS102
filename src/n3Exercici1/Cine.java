@@ -1,4 +1,4 @@
-package n2Exercici3;
+package n3Exercici1;
 
 import java.util.ArrayList;
 import java.util.Comparator;
