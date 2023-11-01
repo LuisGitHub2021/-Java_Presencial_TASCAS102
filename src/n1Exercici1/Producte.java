@@ -11,16 +11,29 @@ public class Producte {
 		this.preu = preu;
 	}
 
+	public Producte() {
+	
+	}
+
 	// getters & setters
+	public String getNom() {
+		return this.nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
 	public double getPreu() {
-		return preu;
+		return this.preu;
 	}
 
-	// metodos de clase
-	static Producte seleccionarProducto(String nom, double preu) {
-
-		return new Producte(nom, preu);
-
+	public void setPreu(double preu) {
+		this.preu = preu;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Producte [nom=" + nom + ", preu=" + preu + "]";
+	}
 }

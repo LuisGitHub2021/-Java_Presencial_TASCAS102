@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 
 public class Entrada {
 
-	public static byte llegirByte(String txt) throws InputMismatchException {
+	public static byte llegirByte(String txt) {
 
 		System.out.println(txt);
 		byte num = 0;
@@ -23,7 +23,7 @@ public class Entrada {
 
 	}
 
-	public static int llegirInt(String txt) throws InputMismatchException {
+	public static int llegirInt(String txt) {
 
 		System.out.println(txt);
 		int num = 0;
@@ -31,8 +31,8 @@ public class Entrada {
 		try {
 
 			num = new Scanner(System.in).nextInt();
-			if (num<0) {
-				num=-1*num;
+			if (num < 0) {
+				num = -1 * num;
 			}
 
 		} catch (InputMismatchException e) {
@@ -44,7 +44,7 @@ public class Entrada {
 
 	}
 
-	public static float llegirFloat(String txt) throws InputMismatchException {
+	public static float llegirFloat(String txt) {
 
 		System.out.println(txt);
 		float num = 0;
@@ -62,7 +62,7 @@ public class Entrada {
 		return num;
 	}
 
-	public static double llegirDouble(String txt) throws InputMismatchException {
+	public static double llegirDouble(String txt) {
 
 		System.out.println(txt);
 		double num = 0;
@@ -78,51 +78,33 @@ public class Entrada {
 		}
 		return num;
 	}
-	
+
 	public static char llegirChar(String txt) throws Exception {
 
 		System.out.println(txt);
 		char entradaChar = '0';
 
-		try {
+		String candidatoChar = new Scanner(System.in).next();
 
-			String candidatoChar = new Scanner(System.in).next();
-			
-			if (candidatoChar.length() > 1) {
-				entradaChar=candidatoChar.charAt(-1);
-				
-			} else {
-				entradaChar=candidatoChar.charAt(0);
-			
-			}
-		} catch (Exception e) {
-
-			System.out.println("El valor introducido no es un caracter");
-
+		if (candidatoChar.length() > 1) {
+			throw new Exception();
+		} else {
+			entradaChar = candidatoChar.charAt(0);
 		}
-
 		return entradaChar;
 
 	}
-	
+
 	public static String llegirString(String txt) throws Exception {
 
 		System.out.println(txt);
 		String entradaString = null;
 
-		try {
+		entradaString = new Scanner(System.in).nextLine();
 
-			entradaString = new Scanner(System.in).nextLine();
+		if (entradaString.isEmpty()) {
 
-			if (entradaString.isEmpty()) {
-
-				throw new Exception();
-
-			}
-
-		} catch (Exception e) {
-
-			System.out.println("El valor introducido no es un String");
+			throw new Exception();
 
 		}
 
@@ -137,26 +119,22 @@ public class Entrada {
 		boolean siOno = false;
 		char entradaBoolean = 'n';
 
-		try {
-			String candidatoBoolean = new Scanner(System.in).next();
+		String candidatoBoolean = new Scanner(System.in).next();
 
-			if (candidatoBoolean.length() > 1) {
-				entradaBoolean = candidatoBoolean.charAt(-1);
+		if (candidatoBoolean.length() > 1) {
+			throw new Exception();
 
+		} else {
+			entradaBoolean = candidatoBoolean.charAt(0);
+			if (entradaBoolean == 's') {
+				siOno = true;
+			} else if (entradaBoolean == 'n') {
+				siOno = false;
 			} else {
-				entradaBoolean = candidatoBoolean.charAt(0);
-				if (entradaBoolean == 's') {
-					siOno = true;
-				} else if (entradaBoolean == 'n') {
-					siOno = false;
-				} else {
-					throw new Exception();
-				}
+				throw new Exception();
 			}
-
-		} catch (Exception e) {
-			System.out.println("El valor introducido no lo poedemos hacer boolean");
 		}
+
 		return siOno;
 
 	}

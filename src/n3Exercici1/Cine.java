@@ -1,16 +1,15 @@
 package n3Exercici1;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.InputMismatchException;
-import java.util.List;
+import java.util.Collections;
 
 // metodos interaccion con la aplicacion
 public class Cine {
 
-	private static int numFilas;
-	private static int numAsientos;
-	private static GestionButacas gestionButacas;
+	// static se queda en la clase y en conseuencia aplicará en todas las instancias
+	private int numFilas;
+	private int numAsientos;
+	private GestionButacas gestionButacas;
 
 	// constructor
 	public Cine() {
@@ -22,16 +21,20 @@ public class Cine {
 	}
 
 	// getters & setters
-	public static int getNumFilas() {
+	public int getNumFilas() {
 		return numFilas;
 	}
 
-	public static int getNumAsientos() {
+	public int getNumAsientos() {
 		return numAsientos;
 	}
 
+	public GestionButacas getGestionButacas() {
+		return gestionButacas;
+	}
+
 	// metodos de clase
-	public void iniciar() throws InputMismatchException, Exception, ExcepcionFilaIncorrecta, ExcepcionAsientoIncorrecto,
+	public void iniciar() throws Exception, ExcepcionFilaIncorrecta, ExcepcionAsientoIncorrecto,
 			ExcepcionNombrePersonaIncorrecto, ExcepcionButacaLibre {
 
 		System.out.println("\nMENU\n1. Mostrar butacas reservadas\n2. Mostrar butacas reservadas por persona"
@@ -80,7 +83,7 @@ public class Cine {
 
 	}
 
-	static void mostarButacas() {
+	public void mostarButacas() {
 		// todas las reservadas
 
 		if (gestionButacas.getButacas().isEmpty()) {
@@ -90,7 +93,7 @@ public class Cine {
 			ArrayList<Butaca> listaPosiblesButacas = crearSala();
 			ArrayList<Butaca> listaButacasReservadas = (ArrayList<Butaca>) gestionButacas.getButacas().clone();
 
-			ordenaByFila(listaButacasReservadas);
+			Collections.sort(listaButacasReservadas, new ordenaByFila());
 
 			for (int i = 0; i < listaPosiblesButacas.size(); i++) {
 				if (listaPosiblesButacas.get(i).getAsiento() == 1) {
@@ -112,9 +115,10 @@ public class Cine {
 			}
 
 		}
+
 	}
 
-	static void mostrarButacasPersona() throws Exception {
+	public void mostrarButacasPersona() throws Exception {
 		// pide nombre persona y muestra todas las butacas de esa persona
 		String nomPersonaCandidato = Entrada.llegirString("Nombre reserva a buscar");
 
@@ -136,7 +140,7 @@ public class Cine {
 
 			ArrayList<Butaca> listaButacasReservadasPersonaMostrar = (ArrayList<Butaca>) listaButacasReservadasPersona
 					.clone();
-			ordenaByFila(listaButacasReservadasPersonaMostrar);
+			Collections.sort(listaButacasReservadasPersonaMostrar, new ordenaByFila());
 
 			if (contador == 0) {
 				System.out.println("No tenemos reservas con este nombre");
@@ -169,140 +173,142 @@ public class Cine {
 		}
 	}
 
-	static void reservaButaca() throws InputMismatchException, ExcepcionFilaIncorrecta, ExcepcionAsientoIncorrecto,
-			Exception, ExcepcionNombrePersonaIncorrecto {
+	public void reservaButaca() {
 		// pide numfila y llama a INTRODUCIR FILA //pide numAsiento y llama a INTRODUCIR
 		// ASIENTO
 		// pide nombre person y llama a INTRODUCIR PERSONA // RESERVA LA BUTACA
 
-		String nomPersona = introducirNombrePersona("Nombre para la reserva");
-		int fila = introducirFila("Fila para la reserva");
-		int asiento = introducirAsiento("Asiento para la reserva");
+		try {
+			String nomPersona = introducirNombrePersona("Nombre para la reserva");
+			int fila = introducirFila("Fila para la reserva");
+			int asiento = introducirAsiento("Asiento para la reserva");
 
-		Butaca butaca = new Butaca(nomPersona, fila, asiento);
+			Butaca butaca = new Butaca(nomPersona, fila, asiento);
 
-		gestionButacas.añadirButaca(butaca, gestionButacas.getButacas(),
-				gestionButacas.buscarButaca(fila, asiento, nomPersona, gestionButacas.getButacas()));
+			gestionButacas.añadirButaca(butaca, gestionButacas.getButacas(),
+					gestionButacas.buscarButaca(fila, asiento, nomPersona, gestionButacas.getButacas()));
+
+		} catch (ExcepcionNombrePersonaIncorrecto e) {
+			System.out.println(e.getMessage());
+		} catch (ExcepcionFilaIncorrecta e) {
+			System.out.println(e.getMessage());
+		} catch (ExcepcionAsientoIncorrecto e) {
+			System.out.println(e.getMessage());
+		} catch (ExcepcionButacaOcupada e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 
-	static void anularReserva() throws Exception, ExcepcionNombrePersonaIncorrecto, InputMismatchException,
-			ExcepcionFilaIncorrecta, ExcepcionAsientoIncorrecto, ExcepcionButacaLibre {
+	public void anularReserva() {
 		// pide numfila INTRODUCIR FILA pide numAsiento INTRODUCIR ASIENTO
 		// ELIMINA RESERVA DE LA BUTACA
 
-		String nomPersona = introducirNombrePersona("Nombre para la reserva");
-		int fila = introducirFila("Fila de la reserva anular");
-		int asiento = introducirAsiento("Asiento de la reserva anular");
+		try {
+			String nomPersona = introducirNombrePersona("Nombre para la reserva");
+			int fila = introducirFila("Fila de la reserva anular");
+			int asiento = introducirAsiento("Asiento de la reserva anular");
 
-		gestionButacas.eliminarButaca(fila, asiento, gestionButacas.getButacas(),
-				gestionButacas.buscarButaca(fila, asiento, nomPersona, gestionButacas.getButacas()));
+			gestionButacas.eliminarButaca(fila, asiento, gestionButacas.getButacas(),
+					gestionButacas.buscarButaca(fila, asiento, nomPersona, gestionButacas.getButacas()));
 
+		} catch (ExcepcionNombrePersonaIncorrecto e) {
+			System.out.println(e.getMessage());
+		} catch (ExcepcionFilaIncorrecta e) {
+			System.out.println(e.getMessage());
+		} catch (ExcepcionAsientoIncorrecto e) {
+			System.out.println(e.getMessage());
+		} catch (ExcepcionButacaLibre e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
-	static void anularReservaPersona() throws ExcepcionNombrePersonaIncorrecto, Exception {
+	public void anularReservaPersona() {
 		// pide nombre persona INTRODUCIR PERSONA
 		// ELIMINA BUTACA RESERVA PERSONA
 
-		String nomPersona = introducirNombrePersona("Nombre de la reserva");
-		int contador = 0;
+		try {
+			String nomPersona = introducirNombrePersona("Nombre de la reserva");
 
-		for (int i = 0; i < gestionButacas.getButacas().size(); i++) {
+			int contador = 0;
 
-			if (gestionButacas.getButacas().get(i).getNomPersona().equalsIgnoreCase(nomPersona)) {
+			for (int i = 0; i < gestionButacas.getButacas().size(); i++) {
 
-				gestionButacas.getButacas().remove(i);
-				System.out.println("Ok, queda anulada");
-				i--;
-				contador++;
+				if (gestionButacas.getButacas().get(i).getNomPersona().equalsIgnoreCase(nomPersona)) {
+
+					gestionButacas.getButacas().remove(i);
+					System.out.println("Ok, queda anulada");
+					i--;
+					contador++;
+
+				}
 
 			}
 
+			if (contador == 0) {
+				System.out.println("No hemos encontrado ninguna reserva con este nombre. Gracias!");
+			} else {
+				System.out.println("Han quedado anuladas todas las reservas de " + nomPersona);
+			}
+		} catch (ExcepcionNombrePersonaIncorrecto e) {
+			System.out.println(e.getMessage());
 		}
-
-		if (contador == 0) {
-			System.out.println("No hemos encontrado ninguna reserva con este nombre. Gracias!");
-		} else {
-			System.out.println("Han quedado anuladas todas las reservas de " + nomPersona);
-		}
-
 	}
 
-	static String introducirNombrePersona(String txt) throws Exception, ExcepcionNombrePersonaIncorrecto {
+	public String introducirNombrePersona(String txt) throws ExcepcionNombrePersonaIncorrecto {
 		// solicita nombre persona
 		// comprueba que no tenga numeros. Retorna si es correcto
 		String nomPersona = Entrada.llegirString(txt);
 
-		try {
-			for (int i = 0; i < nomPersona.length(); i++) {
-				char a = nomPersona.charAt(i);
-				if (a == '0' || a == '1' || a == '2' || a == '3' || a == '4' || a == '5' || a == '6' || a == '7'
-						|| a == '8' || a == '9') {
-					nomPersona = "0";
-					throw new ExcepcionNombrePersonaIncorrecto("Nombre de Persona Incorrecto contiene números");
-				}
+		for (int i = 0; i < nomPersona.length(); i++) {
+			char a = nomPersona.charAt(i);
+			if (a == '0' || a == '1' || a == '2' || a == '3' || a == '4' || a == '5' || a == '6' || a == '7' || a == '8'
+					|| a == '9') {
+				nomPersona = "0";
+				throw new ExcepcionNombrePersonaIncorrecto("Nombre de Persona Incorrecto contiene números");
 			}
-
-		} catch (ExcepcionNombrePersonaIncorrecto e) {
-			System.out.println(e.getMessage());
 		}
 		return nomPersona;
 	}
 
-	static int solicitarDatosIniciales(String txt) throws InputMismatchException {
+	public int solicitarDatosIniciales(String txt) {
 
 		int num = Entrada.llegirInt(txt);
 
 		return num;
 	}
 
-	static int introducirFila(String txt) throws InputMismatchException, ExcepcionFilaIncorrecta {
+	public int introducirFila(String txt) throws ExcepcionFilaIncorrecta {
 		// si esta entre el 1 y el numero de filas totales lo devuelve
 		// si no retorna ExcepcionFilaIncorrecta
 		int fila = Entrada.llegirInt(txt);
 
-		try {
+		if (fila > numFilas || fila <= 0) {
+			fila = 0;
+			throw new ExcepcionFilaIncorrecta("Fila incorecta");
 
-			if (fila > numFilas || fila <= 0) {
-				fila = 0;
-				throw new ExcepcionFilaIncorrecta("Fila incorecta");
-
-			}
-		} catch (ExcepcionFilaIncorrecta e) {
-			System.out.println(e.getMessage());
 		}
 
 		return fila;
 
 	}
 
-	static int introducirAsiento(String txt) throws InputMismatchException, ExcepcionAsientoIncorrecto {
+	public int introducirAsiento(String txt) throws ExcepcionAsientoIncorrecto {
 		// si esta enttre el 1 y el numero de asientos totales lo devuelve
 		// si no retorna ExcepcionAsientoIncorrecto
 
 		int asiento = Entrada.llegirInt(txt);
-		try {
-			if (asiento > numAsientos || asiento <= 0) {
-				asiento = 0;
-				throw new ExcepcionAsientoIncorrecto("Asiento incorecto");
 
-			}
-		} catch (ExcepcionAsientoIncorrecto e) {
-			System.out.println(e.getMessage());
+		if (asiento > numAsientos || asiento <= 0) {
+			asiento = 0;
+			throw new ExcepcionAsientoIncorrecto("Asiento incorecto");
+
 		}
 
 		return asiento;
 	}
 
-	static void ordenaByFila(List<Butaca> butaca) {
-		// Comparator to sort by age ascending
-		Comparator<Butaca> filaComparator = (Butaca s1, Butaca s2) -> {
-			return s1.getFila() - s2.getFila();
-		};
-		butaca.sort(filaComparator);
-	}
-
-	static ArrayList<Butaca> crearSala() {
+	public ArrayList<Butaca> crearSala() {
 
 		ArrayList<Butaca> listaPosiblesButacas = new ArrayList<Butaca>();
 
@@ -313,45 +319,6 @@ public class Cine {
 			}
 		}
 		return listaPosiblesButacas;
-	}
-
-}
-
-class ExcepcionNombrePersonaIncorrecto extends Exception {
-
-	public ExcepcionNombrePersonaIncorrecto() {
-
-	}
-
-	public ExcepcionNombrePersonaIncorrecto(String mensaje) {
-		super(mensaje);
-
-	}
-
-}
-
-class ExcepcionFilaIncorrecta extends Exception {
-
-	public ExcepcionFilaIncorrecta() {
-
-	}
-
-	public ExcepcionFilaIncorrecta(String mensaje) {
-		super(mensaje);
-
-	}
-
-}
-
-class ExcepcionAsientoIncorrecto extends Exception {
-
-	public ExcepcionAsientoIncorrecto() {
-
-	}
-
-	public ExcepcionAsientoIncorrecto(String mensaje) {
-		super(mensaje);
-
 	}
 
 }

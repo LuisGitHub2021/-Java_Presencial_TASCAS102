@@ -3,9 +3,10 @@ package n1Exercici1;
 import java.util.Scanner;
 
 public class PideDatos {
-
+	
+	
 	// PEDIR DATOS
-	static int pideInt(String txt) {
+	public int pideInt(String txt) {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println(txt);
@@ -14,7 +15,7 @@ public class PideDatos {
 		return num;
 	}
 
-	static double pideDouble(String txt) {
+	public double pideDouble(String txt) {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println(txt);
@@ -22,8 +23,7 @@ public class PideDatos {
 
 		return numD;
 	}
-
-	static String pideString(String txt) {
+	public String pideString(String txt) {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println(txt);
@@ -35,7 +35,7 @@ public class PideDatos {
 	}
 
 	// MENSAJES
-	static void pideMensaje(String txt) {
+	public void pideMensaje(String txt) {
 		System.out.println(txt);
 	}
 

@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 
 public class Entrada {
 
-	public static byte llegirByte(String txt) throws InputMismatchException {
+	public static byte llegirByte(String txt) {
 
 		System.out.println(txt);
 		byte num = 0;
@@ -23,7 +23,7 @@ public class Entrada {
 
 	}
 
-	public static int llegirInt(String txt) throws InputMismatchException {
+	public static int llegirInt(String txt) {
 
 		System.out.println(txt);
 		int num = 0;
@@ -44,7 +44,7 @@ public class Entrada {
 
 	}
 
-	public static float llegirFloat(String txt) throws InputMismatchException {
+	public static float llegirFloat(String txt) {
 
 		System.out.println(txt);
 		float num = 0;
@@ -62,7 +62,7 @@ public class Entrada {
 		return num;
 	}
 
-	public static double llegirDouble(String txt) throws InputMismatchException {
+	public static double llegirDouble(String txt) {
 
 		System.out.println(txt);
 		double num = 0;
@@ -105,7 +105,7 @@ public class Entrada {
 
 	}
 
-	public static String llegirString(String txt) throws Exception {
+	public static String llegirString(String txt) {
 
 		System.out.println(txt);
 		String entradaString = "0";
